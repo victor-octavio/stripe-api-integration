@@ -24,11 +24,11 @@ Este projeto é uma API baseada em Go que se integra ao Stripe para gerenciar pr
 
 ### 1. Clone o repositório
 ```bash
-git clone https://github.com/your-repo/back-end-mirumuh
+git clone https://github.com/victor-octavio/api-go-stripe
 ```
 
 ```bash
-cd back-end-mirumuh
+cd api-go-stripe
 ```
 
 ### 2. Instalar dependências
