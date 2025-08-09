@@ -67,7 +67,7 @@ info:
   title: Stripe API Integration
   version: "1.0"
 paths:
-  /checkout/session:
+  /checkout:
     post:
       consumes:
       - application/json

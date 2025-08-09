@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/checkout/session": {
+        "/checkout": {
             "post": {
                 "description": "Cria e retorna os dados/URL de checkout do Stripe a partir do payload informado.",
                 "consumes": [

@@ -25,7 +25,7 @@ func NewCheckoutController(service service.CheckoutService) *CheckoutController 
 // @Success 200 {object} model.CheckoutSessionOutput
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
-// @Router /checkout/session [post]
+// @Router /checkout [post]
 func (c *CheckoutController) CreateCheckoutSession(ctx *gin.Context) {
 	var input model.CheckoutSessionInput
 
