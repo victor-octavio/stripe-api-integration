@@ -1,17 +1,17 @@
 package factory
 
 import (
-	"back_end_mirumuh/controller"
-	"back_end_mirumuh/service"
 	"log"
 	"os"
+	"stripe-api-integration/controller"
+	"stripe-api-integration/service"
 
 	"github.com/joho/godotenv"
 	"github.com/stripe/stripe-go/v81"
 )
 
 type Factory struct {
-	ProductController *controller.ProductController
+	ProductController  *controller.ProductController
 	CheckoutController *controller.CheckoutController
 }
 
@@ -36,7 +36,7 @@ func NewFactory() *Factory {
 	checkoutController := controller.NewCheckoutController(checkoutService)
 
 	return &Factory{
-		ProductController: productController,
+		ProductController:  productController,
 		CheckoutController: checkoutController,
 	}
 }

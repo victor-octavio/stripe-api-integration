@@ -1,9 +1,10 @@
 package router
 
 import (
-	"back_end_mirumuh/factory"
-
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"stripe-api-integration/factory"
 )
 
 func InitRoutes(r *gin.RouterGroup) {
@@ -16,4 +17,7 @@ func InitRoutes(r *gin.RouterGroup) {
 
 	//Checkout
 	r.POST("/checkout", f.CheckoutController.CreateCheckoutSession)
+
+	//Swagger
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

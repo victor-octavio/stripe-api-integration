@@ -1,8 +1,8 @@
 package service
 
 import (
-	"back_end_mirumuh/model"
 	"errors"
+	"stripe-api-integration/model"
 
 	"github.com/stripe/stripe-go/v81"
 	"github.com/stripe/stripe-go/v81/checkout/session"
@@ -22,17 +22,17 @@ func (s *checkoutServiceImpl) CreateCheckoutSession(input model.CheckoutSessionI
 	params := &stripe.CheckoutSessionParams{
 		PaymentMethodTypes: stripe.StringSlice([]string{
 			"card",
-			}), // TODO: Verificar outras formas de pagamento
+		}), // TODO: Verificar outras formas de pagamento
 		CustomerEmail: stripe.String(input.CustomerEmail),
 		LineItems: []*stripe.CheckoutSessionLineItemParams{
 			{
-				Price:    stripe.String(input.PriceID), 
-				Quantity: stripe.Int64(input.Quantity), 
+				Price:    stripe.String(input.PriceID),
+				Quantity: stripe.Int64(input.Quantity),
 			},
 		},
-		Mode:       stripe.String(string(stripe.CheckoutSessionModePayment)), 
-		SuccessURL: stripe.String(input.SuccessURL),                          
-		CancelURL:  stripe.String(input.CancelURL),                          
+		Mode:       stripe.String(string(stripe.CheckoutSessionModePayment)),
+		SuccessURL: stripe.String(input.SuccessURL),
+		CancelURL:  stripe.String(input.CancelURL),
 	}
 
 	sess, err := session.New(params)

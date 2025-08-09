@@ -1,14 +1,13 @@
 package service
 
 import (
-	"back_end_mirumuh/service/util"
-
 	"github.com/stripe/stripe-go/product"
 	"github.com/stripe/stripe-go/v81"
 	"github.com/stripe/stripe-go/v81/price"
+	"stripe-api-integration/service/util"
 )
 
-type productServiceImpl struct{
+type productServiceImpl struct {
 	apiKey string
 }
 
@@ -45,11 +44,11 @@ func (s *productServiceImpl) CreateProduct(name string, description string, acti
 
 func (s *productServiceImpl) ListProducts() ([]map[string]interface{}, error) {
 	params, err := util.ListProductParams(s.apiKey)
-	
+
 	if err != nil {
 		return nil, err
 	}
-	
+
 	result := product.List(params)
 	var products []map[string]interface{}
 
@@ -78,14 +77,13 @@ func (s *productServiceImpl) ListProductsWithPrices() ([]map[string]interface{},
 
 	productIterator := product.List(params)
 
-
 	var productsWithPrices []map[string]interface{}
 
 	for productIterator.Next() {
 		p := productIterator.Product()
 
-		priceListParams, err := util.GetProducWithPriceParams(*stripe.String(p.ID)  ,s.apiKey)
-		
+		priceListParams, err := util.GetProducWithPriceParams(*stripe.String(p.ID), s.apiKey)
+
 		if err != nil {
 			return nil, err
 		}
@@ -97,7 +95,7 @@ func (s *productServiceImpl) ListProductsWithPrices() ([]map[string]interface{},
 		for priceIterator.Next() {
 			pr := priceIterator.Price()
 			prices = append(prices, map[string]interface{}{
-				"id":       pr.ID, 								
+				"id":       pr.ID,
 				"amount":   pr.UnitAmount,
 				"currency": pr.Currency,
 			})

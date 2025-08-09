@@ -1,6 +1,6 @@
 package service
 
-import "back_end_mirumuh/model"
+import "stripe-api-integration/model"
 
 type CheckoutService interface {
 	CreateCheckoutSession(input model.CheckoutSessionInput) (*model.CheckoutSessionOutput, error)

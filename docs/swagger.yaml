@@ -1,0 +1,184 @@
+basePath: /
+definitions:
+  model.CheckoutSessionInput:
+    properties:
+      cancel_url:
+        type: string
+      customer_email:
+        type: string
+      price_id:
+        type: string
+      quantity:
+        minimum: 1
+        type: integer
+      success_url:
+        type: string
+    required:
+    - cancel_url
+    - customer_email
+    - price_id
+    - quantity
+    - success_url
+    type: object
+  model.CheckoutSessionOutput:
+    properties:
+      session_id:
+        type: string
+      url:
+        type: string
+    type: object
+  model.CreateProductInput:
+    properties:
+      active:
+        type: boolean
+      currency:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+    required:
+    - active
+    - currency
+    - description
+    - name
+    - price
+    type: object
+  model.Product:
+    properties:
+      currency:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+    required:
+    - currency
+    - name
+    - price
+    type: object
+info:
+  contact: {}
+  description: API para produtos, preços e checkout com Stripe.
+  title: Stripe API Integration
+  version: "1.0"
+paths:
+  /checkout/session:
+    post:
+      consumes:
+      - application/json
+      description: Cria e retorna os dados/URL de checkout do Stripe a partir do payload
+        informado.
+      parameters:
+      - description: Dados para criar a sessão de checkout
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.CheckoutSessionInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CheckoutSessionOutput'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Cria uma sessão de checkout no Stripe
+      tags:
+      - checkout
+  /products:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Product'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Lista todos os produtos
+      tags:
+      - products
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Dados do produto
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateProductInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Product'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Cria um produto (e preço inicial)
+      tags:
+      - products
+  /products/with-prices:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Product'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Lista produtos com seus preços
+      tags:
+      - products
+schemes:
+- http
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
